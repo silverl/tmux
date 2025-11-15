@@ -1,0 +1,204 @@
+# Custom Tmux Configuration
+
+A ergonomic tmux configuration optimized for macOS with Caps Lock mapped to Ctrl. Inspired by tmux-prefixless but maintains tmux's standard prefix-based workflow.
+
+## Philosophy
+
+- **Ergonomic prefix**: Ctrl+S instead of Ctrl+B (easy with Caps Lock → Ctrl mapping)
+- **Vim-style navigation**: h/j/k/l for intuitive pane movement
+- **Smart behaviors**: Path preservation, intelligent pane killing, smooth scrolling
+- **Standard tmux workflow**: Uses prefix key (no timing-based prefixless mode)
+
+## Features
+
+### Prefix Key
+
+- **Ctrl+S** - New prefix (replaces Ctrl+B)
+- **Ctrl+S, Ctrl+S** - Send Ctrl+S to application
+
+### Pane Navigation (Vim-style)
+
+- **Prefix, h/j/k/l** - Navigate left/down/up/right
+- **Prefix, f** - Toggle pane zoom (fullscreen)
+
+### Smart Pane Switching
+
+- **Prefix, j** - Select next pane (down) with resize trick
+- **Prefix, k** - Select previous pane (up) with resize trick
+
+The resize trick briefly shrinks the target pane before switching, preventing the "invisible pane" problem.
+
+### Pane Splitting (with path preservation)
+
+- **Prefix, s** - Split horizontally (new pane below)
+- **Prefix, v** - Split vertically (new pane to right)
+
+New panes inherit the current directory automatically.
+
+### Smart Pane Killing
+
+- **Prefix, x** - Smart kill pane
+  - Vim/SSH sessions → Asks for confirmation
+  - Shell sessions (bash/zsh) → Kills immediately
+  - Everything else → Asks for confirmation
+
+### Pane Resizing
+
+- **Prefix, Arrow Keys** - Resize pane in direction (repeatable)
+
+### Window Management
+
+- **Prefix, c** - New window (in current directory)
+- **Prefix, [** - Previous window (repeatable)
+- **Prefix, ]** - Next window (repeatable)
+- **Prefix, H** - Previous window (alternative)
+- **Prefix, L** - Next window (alternative)
+
+### Session Management
+
+- **Prefix, a** - Choose session (interactive menu)
+
+### Copy Mode (Vim-style with macOS clipboard)
+
+- **Prefix, y** - Enter copy mode
+- **v** - Begin visual selection (in copy mode)
+- **V** - Select line (in copy mode)
+- **Ctrl+V** - Rectangle selection (in copy mode)
+- **y** - Yank to macOS clipboard and exit (in copy mode)
+- **Enter** - Yank to macOS clipboard and exit (in copy mode)
+
+### Smooth Scrolling in Copy Mode
+
+- **J** - Scroll down smoothly (5 lines)
+- **K** - Scroll up smoothly (5 lines)
+- **H** - Jump to start of line
+- **L** - Jump to end of line
+- **Ctrl+U** - Half page up
+- **Ctrl+D** - Half page down
+
+## Installation with TPM
+
+### 1. Install TPM (if not already installed)
+
+```bash
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+```
+
+### 2. Add this plugin to your ~/.tmux.conf
+
+```bash
+# Add to the bottom of ~/.tmux.conf
+
+# List of plugins
+set -g @plugin 'tmux-plugins/tpm'
+
+# Add your custom configuration
+set -g @plugin '~/code/tmux'
+
+# Initialize TPM (keep this line at the very bottom)
+run '~/.tmux/plugins/tpm/tpm'
+```
+
+### 3. Install the plugin
+
+Inside tmux:
+
+- **Prefix, I** (capital I) - Install plugins
+
+Or reload tmux config:
+
+```bash
+tmux source ~/.tmux.conf
+```
+
+### 4. Verify installation
+
+Press **Prefix** (Ctrl+S) followed by **h** - you should navigate to the left pane.
+
+## Manual Installation (without TPM)
+
+If you prefer not to use TPM, source the configuration directly:
+
+```bash
+# Add to ~/.tmux.conf
+run-shell "~/code/tmux/scripts/key-bindings.tmux"
+```
+
+Then reload:
+
+```bash
+tmux source ~/.tmux.conf
+```
+
+## Configuration Details
+
+### Smart Scripts
+
+#### kill-pane.bash
+
+Intelligently handles pane closing based on the running process:
+
+- Protects important sessions (vim, ssh) with confirmation
+- Instantly closes safe processes (shells, pagers)
+- Defaults to confirmation for unknown processes
+
+#### smooth-scroll.bash
+
+Provides smooth scrolling in copy mode by breaking large scroll operations into small incremental steps.
+
+### Additional Settings
+
+- **Mouse support**: Enabled for quick selections
+- **History limit**: 50,000 lines
+- **Window numbering**: Starts at 1 (not 0)
+- **Renumber windows**: Automatically renumbers when windows close
+- **Focus events**: Enabled for vim integration
+- **Fast escape**: 10ms escape time for better vim experience
+- **True color**: 24-bit color support enabled
+- **Bell notifications**: Hear bells from background windows/panes (highlights window name in red)
+
+## Customization
+
+Edit `~/code/tmux/scripts/key-bindings.tmux` to customize bindings.
+
+Common customizations:
+
+- Change prefix key (edit `set -g prefix C-s`)
+- Modify split keys
+- Adjust mouse behavior
+- Change color settings
+
+## Troubleshooting
+
+### Prefix key not working
+
+- Verify Caps Lock is mapped to Ctrl in macOS System Settings
+- Test with `Ctrl+S` in a text editor first
+- Reload tmux config: `tmux source ~/.tmux.conf`
+
+### Smart kill not working
+
+- Check script permissions: `ls -l ~/code/tmux/scripts/bin/`
+- Scripts should be executable (chmod +x)
+
+### Clipboard integration not working
+
+- Requires `pbcopy` (built into macOS)
+- Test: `echo "test" | pbcopy && pbpaste`
+
+### Smooth scrolling not working
+
+- Enter copy mode first (Prefix, y)
+- Then use J/K to scroll
+
+### Not hearing bells from background windows
+
+- Check `bell-action` is set to `any` (not `current` or `none`)
+- Ensure `visual-bell` is set to `off` for audible bells
+- In iTerm2: Settings → Profiles → Terminal → Uncheck "Silence bell"
+- For macOS notifications: Settings → Profiles → Session → Check "Post a notification when a bell rings..."
+- Test with: `echo -e '\a'` (should hear/see bell immediately)
+
+## Credits
+
+Inspired by [tmux-prefixless](https://github.com/joshmedeski/tmux-prefixless) by joshmedeski, adapted for standard tmux workflow with ergonomic enhancements.
