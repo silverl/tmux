@@ -40,11 +40,9 @@ bind s split-window -v -c "#{pane_current_path}"
 # PANE MANAGEMENT
 # ==============================================================================
 
-# Get script directory for helper scripts
-CURRENT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-
 # Smart pane killing (confirms for vim/ssh, instant for shells)
-bind x run-shell "$CURRENT_DIR/bin/kill-pane.bash"
+# Note: TPM sets up the path correctly, we can use a relative path from the script location
+bind x run-shell "~/.tmux/plugins/tmux/scripts/bin/kill-pane.bash"
 
 # Toggle pane zoom
 bind f resize-pane -Z
@@ -90,8 +88,8 @@ bind-key -T copy-mode-vi y send-keys -X copy-pipe-and-cancel "pbcopy"
 bind-key -T copy-mode-vi Enter send-keys -X copy-pipe-and-cancel "pbcopy"
 
 # Smooth scrolling in copy mode
-bind-key -T copy-mode-vi K run-shell "$CURRENT_DIR/bin/smooth-scroll.bash -5"
-bind-key -T copy-mode-vi J run-shell "$CURRENT_DIR/bin/smooth-scroll.bash 5"
+bind-key -T copy-mode-vi K run-shell "~/.tmux/plugins/tmux/scripts/bin/smooth-scroll.bash -5"
+bind-key -T copy-mode-vi J run-shell "~/.tmux/plugins/tmux/scripts/bin/smooth-scroll.bash 5"
 
 # Navigate to line boundaries
 bind-key -T copy-mode-vi H send-keys -X start-of-line
