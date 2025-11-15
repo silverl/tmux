@@ -78,40 +78,42 @@ New panes inherit the current directory automatically.
 
 ## Installation with TPM
 
-### 1. Install TPM (if not already installed)
+### 1. Clone this repository
+
+```bash
+git clone https://github.com/silverl/tmux.git ~/code/tmux
+```
+
+### 2. Symlink the tmux configuration
+
+```bash
+# Backup existing config if you have one
+mv ~/.tmux.conf ~/.tmux.conf.backup
+
+# Create symlink to the repo config
+ln -s ~/code/tmux/tmux.conf ~/.tmux.conf
+```
+
+### 3. Install TPM (if not already installed)
 
 ```bash
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 ```
 
-### 2. Add this plugin to your ~/.tmux.conf
-
-```bash
-# Add to the bottom of ~/.tmux.conf
-
-# List of plugins
-set -g @plugin 'tmux-plugins/tpm'
-
-# Add your custom configuration
-set -g @plugin '~/code/tmux'
-
-# Initialize TPM (keep this line at the very bottom)
-run '~/.tmux/plugins/tpm/tpm'
-```
-
-### 3. Install the plugin
+### 4. Install the plugins
 
 Inside tmux:
 
 - **Prefix, I** (capital I) - Install plugins
 
-Or reload tmux config:
+Or from command line:
 
 ```bash
+~/.tmux/plugins/tpm/bin/install_plugins
 tmux source ~/.tmux.conf
 ```
 
-### 4. Verify installation
+### 5. Verify installation
 
 Press **Prefix** (Ctrl+S) followed by **h** - you should navigate to the left pane.
 
