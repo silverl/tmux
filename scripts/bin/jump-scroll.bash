@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 #
-# Smooth scrolling in tmux copy mode
-# Usage: smooth-scroll.bash <number-of-lines>
+# Jump scrolling in tmux copy mode (5-line increments)
+# Usage: jump-scroll.bash <number-of-lines>
 #   Positive number = scroll down
 #   Negative number = scroll up
 #   'half' = scroll half page
@@ -27,7 +27,7 @@ else
 	direction="down"
 fi
 
-# Scroll in chunks for smooth animation
+# Scroll in chunks
 while (( lines > 0 )); do
 	if ((step > lines)); then
 		tmux send-keys -X -N $lines cursor-$direction

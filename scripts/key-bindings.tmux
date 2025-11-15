@@ -87,9 +87,9 @@ bind-key -T copy-mode-vi C-v send-keys -X rectangle-toggle
 bind-key -T copy-mode-vi y send-keys -X copy-pipe-and-cancel "pbcopy"
 bind-key -T copy-mode-vi Enter send-keys -X copy-pipe-and-cancel "pbcopy"
 
-# Smooth scrolling in copy mode
-bind-key -T copy-mode-vi K run-shell "~/.tmux/plugins/tmux/scripts/bin/smooth-scroll.bash -5"
-bind-key -T copy-mode-vi J run-shell "~/.tmux/plugins/tmux/scripts/bin/smooth-scroll.bash 5"
+# Jump scrolling in copy mode (5 lines at a time)
+bind-key -T copy-mode-vi K run-shell "~/.tmux/plugins/tmux/scripts/bin/jump-scroll.bash -5"
+bind-key -T copy-mode-vi J run-shell "~/.tmux/plugins/tmux/scripts/bin/jump-scroll.bash 5"
 
 # Navigate to line boundaries
 bind-key -T copy-mode-vi H send-keys -X start-of-line

@@ -6,7 +6,7 @@ A ergonomic tmux configuration optimized for macOS with Caps Lock mapped to Ctrl
 
 - **Ergonomic prefix**: Ctrl+S instead of Ctrl+B (easy with Caps Lock → Ctrl mapping)
 - **Vim-style navigation**: h/j/k/l for intuitive pane movement
-- **Smart behaviors**: Path preservation, intelligent pane killing, smooth scrolling
+- **Smart behaviors**: Path preservation, intelligent pane killing, jump scrolling
 - **Standard tmux workflow**: Uses prefix key (no timing-based prefixless mode)
 
 ## Features
@@ -67,10 +67,10 @@ New panes inherit the current directory automatically.
 - **y** - Yank to macOS clipboard and exit (in copy mode)
 - **Enter** - Yank to macOS clipboard and exit (in copy mode)
 
-### Smooth Scrolling in Copy Mode
+### Jump Scrolling in Copy Mode
 
-- **J** - Scroll down smoothly (5 lines)
-- **K** - Scroll up smoothly (5 lines)
+- **J** - Scroll down 5 lines
+- **K** - Scroll up 5 lines
 - **H** - Jump to start of line
 - **L** - Jump to end of line
 - **Ctrl+U** - Half page up
@@ -142,9 +142,9 @@ Intelligently handles pane closing based on the running process:
 - Instantly closes safe processes (shells, pagers)
 - Defaults to confirmation for unknown processes
 
-#### smooth-scroll.bash
+#### jump-scroll.bash
 
-Provides smooth scrolling in copy mode by breaking large scroll operations into small incremental steps.
+Provides quick jumping in copy mode (5 lines at a time with J/K keys).
 
 ### Additional Settings
 
@@ -186,10 +186,10 @@ Common customizations:
 - Requires `pbcopy` (built into macOS)
 - Test: `echo "test" | pbcopy && pbpaste`
 
-### Smooth scrolling not working
+### Jump scrolling not working
 
 - Enter copy mode first (Prefix, y)
-- Then use J/K to scroll
+- Then use J/K to jump 5 lines up/down
 
 ### Not hearing bells from background windows
 
