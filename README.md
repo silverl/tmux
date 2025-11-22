@@ -76,7 +76,7 @@ New panes inherit the current directory automatically.
 - **Ctrl+U** - Half page up
 - **Ctrl+D** - Half page down
 
-## Installation with TPM
+## Installation
 
 ### 1. Clone this repository
 
@@ -100,17 +100,7 @@ ln -s ~/code/tmux/tmux.conf ~/.tmux.conf
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 ```
 
-### 4. Symlink this repo as a TPM plugin
-
-This allows TPM to automatically discover and load the configuration:
-
-```bash
-ln -s ~/code/tmux ~/.tmux/plugins/tmux
-```
-
-**How it works**: TPM automatically executes all `*.tmux` files in plugin directories. The symlink allows TPM to find and run `tmux-custom.tmux`, which loads the key bindings (including the `Ctrl+S` prefix).
-
-### 5. Install the plugins
+### 4. Install the plugins
 
 Inside tmux:
 
@@ -123,24 +113,20 @@ Or from command line:
 tmux source ~/.tmux.conf
 ```
 
-### 6. Verify installation
+### 5. Verify installation
 
 Press **Prefix** (Ctrl+S) followed by **h** - you should navigate to the left pane.
 
 ## Manual Installation (without TPM)
 
-If you prefer not to use TPM, source the configuration directly:
+If you prefer not to use TPM, simply symlink the configuration:
 
 ```bash
-# Add to ~/.tmux.conf
-run-shell "~/code/tmux/scripts/key-bindings.tmux"
-```
-
-Then reload:
-
-```bash
+ln -s ~/code/tmux/tmux.conf ~/.tmux.conf
 tmux source ~/.tmux.conf
 ```
+
+Note: Without TPM, you won't have tmux-resurrect or tmux-continuum plugins, but all keybindings and settings will work.
 
 ## Configuration Details
 
@@ -171,7 +157,7 @@ Provides quick jumping in copy mode (5 lines at a time with J/K keys).
 
 ## Customization
 
-Edit `~/code/tmux/scripts/key-bindings.tmux` to customize bindings.
+Edit `~/code/tmux/tmux.conf` to customize bindings and settings.
 
 Common customizations:
 
