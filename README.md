@@ -100,11 +100,21 @@ ln -s ~/code/tmux/tmux.conf ~/.tmux.conf
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 ```
 
-### 4. Install the plugins
+### 4. Symlink this repo as a TPM plugin
+
+This allows TPM to automatically discover and load the configuration:
+
+```bash
+ln -s ~/code/tmux ~/.tmux/plugins/tmux
+```
+
+**How it works**: TPM automatically executes all `*.tmux` files in plugin directories. The symlink allows TPM to find and run `tmux-custom.tmux`, which loads the key bindings (including the `Ctrl+S` prefix).
+
+### 5. Install the plugins
 
 Inside tmux:
 
-- **Prefix, I** (capital I) - Install plugins
+- **Prefix, I** (capital I) - Install plugins (if using default Ctrl+B prefix initially)
 
 Or from command line:
 
@@ -113,7 +123,7 @@ Or from command line:
 tmux source ~/.tmux.conf
 ```
 
-### 5. Verify installation
+### 6. Verify installation
 
 Press **Prefix** (Ctrl+S) followed by **h** - you should navigate to the left pane.
 
